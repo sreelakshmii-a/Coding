@@ -98,7 +98,64 @@ struct term *add(struct term *poly1,struct term *poly2){
 }
 
 
-void diplay(struct term *head){
+struct term *multi(struct term *poly1, struct term *poly2){
+    struct term *head = NULL;
+    struct term *start2 = poly2; 
+
+    while(poly1 != NULL){
+        poly2 = start2; 
+
+        while(poly2 != NULL){
+            struct term *newnode = (struct term*)malloc(sizeof(struct term));
+            newnode->coeff = poly1->coeff * poly2->coeff;
+            newnode->exp = poly1->exp + poly2->exp;
+            newnode->next = NULL;
+
+           
+            if (head == NULL) {
+                head = newnode; 
+            } else {
+                struct term *temp = head;
+                struct term *prev = NULL;
+
+               
+                while (temp != NULL && temp->exp > newnode->exp) {
+                    prev = temp;
+                    temp = temp->next;
+                }
+
+               
+                if (temp != NULL && temp->exp == newnode->exp) {
+                    temp->coeff += newnode->coeff;
+                    free(newnode);
+                } else {
+                    
+                    if (prev == NULL) {
+                        
+                        newnode->next = head;
+                        head = newnode;
+                    } else {
+                        
+                        newnode->next = prev->next;
+                        prev->next = newnode;
+                    }
+                }
+            }
+
+            poly2 = poly2->next;
+        }
+
+        poly1 = poly1->next;
+    }
+
+    return head;
+}
+
+
+
+
+
+void display(struct term *head){
   struct term *temp=head;
   while(temp!=NULL){
     printf("%dx^%d\t",temp->coeff,temp->exp);
@@ -112,7 +169,7 @@ void diplay(struct term *head){
 int main(){
   int op;
   printf("CHOOSE FROM BELOW\n 1.ADDITION\n 2.MULTIPLICATION\n");
-  struct term *p1=NULL,*p2=NULL,*p3=NULL;
+  struct term *p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL;
   scanf("%d",&op);
   
   switch(op){
@@ -124,10 +181,22 @@ int main(){
         p3=add(p1,p2);
        printf("The resulting polynomial after addition is:\n");
 
-        diplay(p3);
+        display(p3);
         break;
     case 2:
+        printf("Enter the first polynomial:\n");
+        p1=create(p1);
+        printf("Enter the second polynomial:\n");
+        p2=create(p2);
+        p4=multi(p1,p2);
+        printf("Reultant polynomial is\n");
+        display(p4);
+        break;
+    case 3:
         exit(0);
+    default:
+      printf("Invalid Input");
+        
 
   }
   return 0;
