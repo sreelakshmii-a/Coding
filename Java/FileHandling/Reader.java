@@ -35,6 +35,7 @@ import java.io.IOException;
     
       do{
         line=buffer.readLine();
+        
         if(line!=null){
           output.write(line);
           System.out.println(line);
