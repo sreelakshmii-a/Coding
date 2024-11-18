@@ -24,6 +24,6 @@ public class STokenizer {
       
     }while(tokens.hasMoreTokens());
 
-    System.err.println("SUM"+sum);
+    System.out.println("SUM"+sum);
   }
 }

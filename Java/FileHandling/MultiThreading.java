@@ -8,7 +8,7 @@ class thread1 extends Thread{
   public void run() {
     try{
     for(int i=0;i<10;i++){
-      int number=randomobj.nextInt(10);
+      int number=ramndomobj.nextInt(10);
       System.out.println("Number is:"+ number);
     
   if(number%2==0){
@@ -60,3 +60,4 @@ class thread3 extends Thread{
 
   }
 }
+// unchecked exception comes under RunTimeException while chechked Exceptions comes under Exception class
